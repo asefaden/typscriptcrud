@@ -1,0 +1,18 @@
+module.exports = [
+"[externals]/node:crypto [external] (node:crypto, cjs, async loader)", ((__turbopack_context__) => {
+
+__turbopack_context__.v((parentImport) => {
+    return Promise.resolve().then(() => {
+        return parentImport("[externals]/node:crypto [external] (node:crypto, cjs)");
+    });
+});
+}),
+"[project]/src/app/api/tasks/route.ts [app-route] (ecmascript, async loader)", ((__turbopack_context__) => {
+
+__turbopack_context__.v((parentImport) => {
+    return Promise.resolve().then(() => {
+        return parentImport("[project]/src/app/api/tasks/route.ts [app-route] (ecmascript)");
+    });
+});
+}),
+];
