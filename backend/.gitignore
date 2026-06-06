@@ -1,5 +1,7 @@
-node_modules
-# Keep environment variables out of version control
-.env
+# 🛑 ሁሉንም የ node_modules ፎልደሮች በየቦታው ለመከልከል ከኋላው ኮከብ ይደረጋል
+**/node_modules/
+**/.next/
+**/.env
 
-/generated/prisma
+# የPrisma 7 አዲሱ ክሊየንት ፎልደር እንዳይሰቀል መከልከያ
+backend/prisma/generated/
