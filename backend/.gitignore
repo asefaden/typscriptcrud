@@ -1,7 +1,12 @@
-# 🛑 ሁሉንም የ node_modules ፎልደሮች በየቦታው ለመከልከል ከኋላው ኮከብ ይደረጋል
-**/node_modules/
-**/.next/
-**/.env
+# dependencies
+/node_modules/
+/.prisma/
 
-# የPrisma 7 አዲሱ ክሊየንት ፎልደር እንዳይሰቀል መከልከያ
-backend/prisma/generated/
+# next.js development/production artifacts
+/.next/
+/out/
+/build/
+
+# environment files and prisma cache
+.env*
+/prisma/generated/
