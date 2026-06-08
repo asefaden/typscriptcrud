@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
   // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': 'https://aletcloud.com',
+  'Access-Control-Allow-Origin': 'https://typescript.app.aletcloud.com',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { title, description } = await request.json();
+    const { title, description } = await request.json() as any;
     if (!title) {
       return NextResponse.json({ error: 'ርዕስ ያስፈልጋል' }, { status: 400, headers: corsHeaders });
     }

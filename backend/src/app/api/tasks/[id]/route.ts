@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
   // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': 'https://aletcloud.com',
+  'Access-Control-Allow-Origin': 'https://typescript.app.aletcloud.com',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -46,7 +46,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, description, isCompleted } = body;
+    const { title, description, isCompleted } = body as any;
 
     // 1. መጀመሪያ ተግባሩ የዚህ ተጠቃሚ መሆኑን ማረጋገጥ
     const existingTask = await prisma.task.findFirst({
