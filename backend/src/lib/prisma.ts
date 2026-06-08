@@ -1,27 +1,22 @@
-// Use the path alias defined in tsconfig.json to ensure Docker builds resolve types correctly
-import { PrismaClient } from '@prisma-client'; 
+import { PrismaClient } from '@prisma/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
-let prismaInstance: PrismaClient;
-
-if (!globalForPrisma.prisma) {
+function createPrisma() {
   if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL must be set');
+    console.warn("⚠️ DATABASE_URL is not set. Prisma will fail at runtime if used.");
+    return new PrismaClient(); // fallback, avoids build crash
   }
-  
-  // Pass the DATABASE_URL (string) to the adapter to satisfy expected types
+
   const adapter = new PrismaMariaDb(process.env.DATABASE_URL);
-
-  // አዲሱን ክሊየንት በአዳፕተሩ ማስነሳት
-  prismaInstance = new PrismaClient({ adapter });
-
-  if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.prisma = prismaInstance;
-  }
-} else {
-  prismaInstance = globalForPrisma.prisma;
+  return new PrismaClient({ adapter });
 }
 
-export const prisma = prismaInstance;
+export const prisma =
+  globalForPrisma.prisma ||
+  createPrisma();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}
