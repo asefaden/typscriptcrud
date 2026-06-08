@@ -23,7 +23,8 @@ interface LoginRequest {
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json() as LoginRequest;
+    const body = await request.json() as LoginRequest;
+    const { email, password } = body;
     if (!email || !password) {
       return NextResponse.json({ error: 'እባክዎ ኢሜይል እና ፓስወርድ ያስገቡ' }, { status: 400, headers: corsHeaders });
     }

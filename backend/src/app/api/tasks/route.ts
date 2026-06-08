@@ -62,7 +62,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { title, description } = await request.json() as CreateTaskRequest;
+    const body = await request.json() as CreateTaskRequest;
+    const { title, description } = body;
     if (!title) {
       return NextResponse.json({ error: 'ርዕስ ያስፈልጋል' }, { status: 400, headers: corsHeaders });
     }

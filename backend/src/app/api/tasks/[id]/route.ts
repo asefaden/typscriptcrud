@@ -51,7 +51,8 @@ export async function PUT(
       return NextResponse.json({ error: 'Invalid Task ID' }, { status: 400, headers: corsHeaders });
     }
 
-    const { title, description, isCompleted } = await request.json() as UpdateTaskRequest;
+    const body = await request.json() as UpdateTaskRequest;
+    const { title, description, isCompleted } = body;
 
     // 1. መጀመሪያ ተግባሩ የዚህ ተጠቃሚ መሆኑን ማረጋገጥ
     const existingTask = await prisma.task.findFirst({

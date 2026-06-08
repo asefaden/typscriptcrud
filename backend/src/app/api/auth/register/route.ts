@@ -23,7 +23,8 @@ interface RegisterRequest {
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password } = await request.json() as RegisterRequest;
+    const body = await request.json() as RegisterRequest;
+    const { name, email, password } = body;
 
     if (!email || !password) {
       return NextResponse.json({ error: 'ኢሜይል እና ፓስወርድ ያስፈልጋል' }, { status: 400, headers: corsHeaders });
