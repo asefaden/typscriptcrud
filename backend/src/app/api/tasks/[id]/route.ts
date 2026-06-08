@@ -3,7 +3,6 @@ import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
-  // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -16,10 +15,8 @@ export async function OPTIONS() {
 
 function getUserIdFromToken(request: Request) {
   const authHeader = request.headers.get('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
-  const parts = authHeader.split(' ');
-  if (parts.length !== 2) return null;
-  const token = parts[1];
+  if (!authHeader?.startsWith('Bearer ')) return null;
+  const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { userId: number };
     return decoded.userId;
@@ -34,42 +31,27 @@ interface UpdateTaskRequest {
   isCompleted?: boolean;
 }
 
-// 🛑 ማስተካከያ፦ Next.js 16 ላይ params በ Promise ፎርማት ስለሚመጣ Promise በመጠቀም እንቀበለዋለን
 export async function PUT(
-  request: Request, 
-  { params }: { params: Promise<{ id: string }> } // 👈 እዚህ ጋር Promise መደረጉን ያረጋግጡ
+  request: Request,
+  { params }: { params: { id: string } }
 ) {
   const userId = getUserIdFromToken(request);
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders });
 
   try {
-    // 🛑 ማስተካከያ፦ መጀመሪያ paramsን አዌይት (await) እናደርገዋለን
-    const resolvedParams = await params;
-    const taskId = parseInt(resolvedParams.id, 10);
-    
-    if (isNaN(taskId)) {
-      return NextResponse.json({ error: 'Invalid Task ID' }, { status: 400, headers: corsHeaders });
-    }
+    const taskId = parseInt(params.id, 10);
+    if (isNaN(taskId)) return NextResponse.json({ error: 'Invalid Task ID' }, { status: 400, headers: corsHeaders });
 
     const body = await request.json() as UpdateTaskRequest;
-    const { title, description, isCompleted } = body;
+    const existingTask = await prisma.task.findFirst({ where: { id: taskId, userId } });
+    if (!existingTask) return NextResponse.json({ error: 'Task not found' }, { status: 404, headers: corsHeaders });
 
-    // 1. መጀመሪያ ተግባሩ የዚህ ተጠቃሚ መሆኑን ማረጋገጥ
-    const existingTask = await prisma.task.findFirst({
-      where: { id: taskId, userId: userId }
-    });
-
-    if (!existingTask) {
-      return NextResponse.json({ error: 'Task not found' }, { status: 404, headers: corsHeaders });
-    }
-
-    // 2. መረጃውን ማስተካከል
     const updatedTask = await prisma.task.update({
       where: { id: taskId },
       data: {
-        title: title !== undefined ? title : existingTask.title,
-        description: description !== undefined ? description : existingTask.description,
-        isCompleted: isCompleted !== undefined ? isCompleted : existingTask.isCompleted,
+        title: body.title ?? existingTask.title,
+        description: body.description ?? existingTask.description,
+        isCompleted: body.isCompleted ?? existingTask.isCompleted,
       },
     });
 
@@ -80,26 +62,21 @@ export async function PUT(
   }
 }
 
-// 🛑 ማስተካከያ፦ DELETE API ላይም እንዲሁ params በ Promise መፈታት አለበት
 export async function DELETE(
-  request: Request, 
-  { params }: { params: Promise<{ id: string }> } // 👈 እዚህም ጋር Promise መደረጉን ያረጋግጡ
+  request: Request,
+  { params }: { params: { id: string } }
 ) {
   const userId = getUserIdFromToken(request);
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders });
 
   try {
-    // 🛑 ማስተካከያ፦ መጀመሪያ paramsን አዌይት (await) እናደርገዋለን
-    const resolvedParams = await params;
-    const taskId = parseInt(resolvedParams.id, 10);
-    
+    const taskId = parseInt(params.id, 10);
     if (isNaN(taskId)) return NextResponse.json({ error: 'Invalid ID' }, { status: 400, headers: corsHeaders });
 
-    await prisma.task.deleteMany({
-      where: { id: taskId, userId: userId },
-    });
+    await prisma.task.deleteMany({ where: { id: taskId, userId } });
     return NextResponse.json({ message: 'Deleted' }, { status: 200, headers: corsHeaders });
   } catch (error) {
+    console.error("Delete SQL Error:", error);
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500, headers: corsHeaders });
   }
 }
