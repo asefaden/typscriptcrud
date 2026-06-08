@@ -16,9 +16,14 @@ export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
+interface LoginRequest {
+  email?: string;
+  password?: string;
+}
+
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json() as any;
+    const { email, password } = await request.json() as LoginRequest;
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {

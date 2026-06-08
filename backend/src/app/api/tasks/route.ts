@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
   // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': 'https://typescript.app.aletcloud.com',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -33,6 +33,11 @@ function getUserIdFromToken(request: Request) {
   }
 }
 
+interface CreateTaskRequest {
+  title?: string;
+  description?: string;
+}
+
 export async function GET(request: Request) {
   const userId = getUserIdFromToken(request);
   if (!userId) {
@@ -57,7 +62,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { title, description } = await request.json() as any;
+    const { title, description } = await request.json() as CreateTaskRequest;
     if (!title) {
       return NextResponse.json({ error: 'ርዕስ ያስፈልጋል' }, { status: 400, headers: corsHeaders });
     }

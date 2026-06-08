@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
   // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': 'https://typescript.app.aletcloud.com',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -28,6 +28,12 @@ function getUserIdFromToken(request: Request) {
   }
 }
 
+interface UpdateTaskRequest {
+  title?: string;
+  description?: string;
+  isCompleted?: boolean;
+}
+
 // 🛑 ማስተካከያ፦ Next.js 16 ላይ params በ Promise ፎርማት ስለሚመጣ Promise በመጠቀም እንቀበለዋለን
 export async function PUT(
   request: Request, 
@@ -45,8 +51,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Invalid Task ID' }, { status: 400, headers: corsHeaders });
     }
 
-    const body = await request.json();
-    const { title, description, isCompleted } = body as any;
+    const { title, description, isCompleted } = await request.json() as UpdateTaskRequest;
 
     // 1. መጀመሪያ ተግባሩ የዚህ ተጠቃሚ መሆኑን ማረጋገጥ
     const existingTask = await prisma.task.findFirst({
@@ -97,4 +102,3 @@ export async function DELETE(
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500, headers: corsHeaders });
   }
 }
-
