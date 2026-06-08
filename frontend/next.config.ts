@@ -3,12 +3,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        // 1. ተጠቃሚው ://aletcloud.com ሲል የባክኤንድ APIዎችን እንዲያገኝ ማድረጊያ
-        source: '/app/tasks',
+        // Proxy task API requests to the backend
+        source: '/api/tasks',
         destination: 'http://localhost:5000/api/tasks',
       },
       {
-        source: '/app/tasks/:path*',
+        source: '/api/tasks/:path*',
         destination: 'http://localhost:5000/api/tasks/:path*',
       },
       {
@@ -17,8 +17,8 @@ const nextConfig = {
         destination: 'http://localhost:5000/api/auth/:path*',
       },
       {
-        // 3. ተጠቃሚው ://aletcloud.com ሲል ወደ ፕሪስማ ስቱዲዮ እንዲያልፍ ማድረጊያ
-        source: '/prisma',
+        // Proxy Prisma Studio requests
+        source: '/prisma-admin',
         destination: 'http://localhost:5555',
       },
       {
