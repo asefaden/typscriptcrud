@@ -6,8 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx prisma generate --schema ./prisma/schema.prisma && next dev",
     "build": "npx prisma generate --schema ./prisma/schema.prisma && next build",
-    "start": "next start"
-  },
+    "start": "next dev && npm start"  },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^7.8.0",
