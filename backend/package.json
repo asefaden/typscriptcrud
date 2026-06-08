@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.js", 
     "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx prisma generate --schema ./prisma/schema.prisma && next dev",
     "build": "npx prisma generate --schema ./prisma/schema.prisma && next build",
-    "start": "npx prisma generate --schema ./prisma/schema.prisma && next build && next start" 
+    "start": "next start" 
   },
 
 

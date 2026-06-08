@@ -2,7 +2,7 @@
 // import { PrismaClient } from '@prisma/client';
 
 // 👇 በፕሪስማ 7 አሰራር መሰረት በዚህ አዲሱ መስመር ይተኩት፦
-import { PrismaClient } from '../../prisma/generated/client'; 
+import { PrismaClient } from '@prisma-client'; 
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
