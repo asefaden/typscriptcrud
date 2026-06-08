@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
-    "baseUrl": ".", // Add this line to set the base URL for module resolution
+    "noEmit": true, // Add this line to set the base URL for module resolution
     "esModuleInterop": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
+    "lib": ["esnext"], // Node.js backend typically only needs 'esnext'
     "ignoreDeprecations":"5.0",
     "incremental": true,
     "paths": {
@@ -30,12 +29,16 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prisma/generated/client/**/*.ts", // Explicitly include generated client types
+    "prisma/generated/client/index.d.ts", // Ensure the main declaration file is picked up
     "next-env.d.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     // Remove Next.js specific build output folders
-    "../frontend" 
+    "../frontend",
+    ".next",
+    "out",
+    "frontend" 
   ]
 }
