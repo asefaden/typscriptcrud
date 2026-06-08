@@ -3,8 +3,8 @@ import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
-  // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': '*',
+  // Set this to your specific frontend URL on aletcloud for security
+  'Access-Control-Allow-Origin': process.env.FRONTEND_URL || '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -25,7 +25,11 @@ function getUserIdFromToken(request: Request) {
   const token = parts[1]; 
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { userId: number };
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined in environment variables");
+      return null;
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
     return decoded.userId;
   } catch (err) {
     console.error("JWT Verification Failed:", err);
