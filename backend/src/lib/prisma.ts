@@ -1,4 +1,8 @@
-import { PrismaClient } from '@prisma-client';
+// ❌ ይህንን የድሮውን መስመር ያጥፉት፦
+// import { PrismaClient } from '@prisma/client';
+
+// 👇 በፕሪስማ 7 አሰራር መሰረት በዚህ አዲሱ መስመር ይተኩት፦
+import { PrismaClient } from '../../prisma/generated/client'; 
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import * as mariadb from 'mariadb';
 
@@ -10,8 +14,7 @@ if (!globalForPrisma.prisma) {
   if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL must be set');
   }
-  const pool = mariadb.createPool(process.env.DATABASE_URL);
-  const adapter = new PrismaMariaDb(pool);
+  const adapter = new PrismaMariaDb(process.env.DATABASE_URL);
 
   // አዲሱን ክሊየንት በአዳፕተሩ ማስነሳት
   prismaInstance = new PrismaClient({ adapter });
