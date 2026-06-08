@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "esnext","DOM","DOM.Iterable"
-    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "baseUrl": ".", // Add this line to set the base URL for module resolution
     "esModuleInterop": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
