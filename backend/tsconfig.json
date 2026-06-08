@@ -7,27 +7,31 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true, // Keep as true if using ts-node or a separate transpiler for runtime
+    "noEmit": true,
     "esModuleInterop": true,
-    "module": "NodeNext", // Use NodeNext for modern Node.js module resolution
-    "moduleResolution": "NodeNext", // Matches the 'module' setting
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    // Remove 'jsx' as it's typically not used in a Node.js backend
+    "jsx": "react-jsx",
     "incremental": true,
-    // Remove Next.js specific plugins
-    // 👇 ADD THESE TWO LINES DIRECTLY HERE
     "paths": {
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "**/*.ts",
-    // If your backend uses .tsx files, uncomment the line below. Otherwise, keep it removed.
-    // "**/*.tsx",
-    // Remove Next.js specific type declarations
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

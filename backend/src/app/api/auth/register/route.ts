@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password } = await request.json() as any;
 
     if (!email || !password) {
       return NextResponse.json({ error: 'ኢሜይል እና ፓስወርድ ያስፈልጋል' }, { status: 400 });

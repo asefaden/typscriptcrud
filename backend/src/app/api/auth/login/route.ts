@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const corsHeaders = {
   // 🛑 ማስተካከያ፦ ከ localhost ወደ ቀጥታ የክላውድ ሊንክዎ ይለውጡት
-  'Access-Control-Allow-Origin': 'https://aletcloud.com',
+  'Access-Control-Allow-Origin': '*', 
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Credentials': 'true',
@@ -18,7 +18,7 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password } = await request.json() as any;
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
