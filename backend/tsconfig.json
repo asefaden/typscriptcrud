@@ -10,7 +10,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "ignoreDeprecations": "6.0",
     "incremental": true,
     "baseUrl": ".",
@@ -18,13 +20,16 @@
       "@/*": [
         "./src/*"
       ],
-      "@prisma-client": ["./prisma/generated/client"]
+      "@prisma-client": [
+        "./prisma/generated/client"
+      ]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "allowJs": true
   },
   "include": [
     "**/*.ts",
@@ -41,6 +46,6 @@
     "../frontend",
     ".next",
     "out",
-    "frontend" 
+    "frontend"
   ]
 }
