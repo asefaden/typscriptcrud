@@ -4,7 +4,6 @@
 // 👇 በፕሪስማ 7 አሰራር መሰረት በዚህ አዲሱ መስመር ይተኩት፦
 import { PrismaClient } from '../../prisma/generated/client'; 
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
-import * as mariadb from 'mariadb';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 

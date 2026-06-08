@@ -2,12 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js", 
-   "scripts": {
+    "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx prisma generate --schema ./prisma/schema.prisma && next dev",
     "build": "npx prisma generate --schema ./prisma/schema.prisma && next build",
-    "start": "next start"
+    "start": "npx prisma generate --schema ./prisma/schema.prisma && next build && next start" 
   },
+
 
   "keywords": [],
   "author": "",
