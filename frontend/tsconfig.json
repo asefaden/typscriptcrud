@@ -16,9 +16,11 @@
     "jsx": "react-jsx",
     "incremental": true,
     "ignoreDeprecations": "5.0",
+  
     "plugins": [
       {
         "name": "next"
+        
       }
     ],
     "paths": {
@@ -39,4 +41,5 @@
     "out",
     "../backend" 
   ]
+  
 }
