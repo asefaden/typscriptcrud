@@ -1,18 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js", 
-    "scripts": {
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx prisma generate --schema ./prisma/schema.prisma && next dev",
-    "build": "npx prisma generate --schema ./prisma/schema.prisma && next build",
-    "start": "next start" 
+    "build": "npx prisma generate --schema ./prisma/schema.prisma",
+    "start": "next dev"
   },
-
-
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^7.8.0",
@@ -33,3 +28,5 @@
     "typescript": "^6.0.3"
   }
 }
+
+ 
