@@ -4,13 +4,8 @@
   "main": "index.js",
  "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate --schema=./prisma/schema.prisma && next build",
+    "build": "npm prisma generate && next build",
     "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma:generate": "npx prisma generate",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:studio": "npx prisma studio",
-    "postinstall": "npx prisma generate",
     "lint": "next lint"
 },
   "dependencies": {
