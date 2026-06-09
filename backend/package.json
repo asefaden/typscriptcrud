@@ -10,7 +10,8 @@
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:studio": "npx prisma studio",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "lint": "next lint"
 },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.8.0",
